@@ -1,5 +1,5 @@
 require "minitest/autorun"
-require "rails-html-sanitizer"
+require "sanitizer"
 
 class ScrubberTest < Minitest::Test
   protected
@@ -30,7 +30,7 @@ end
 class PermitScrubberTest < ScrubberTest
 
   def setup
-    @scrubber = Rails::Html::PermitScrubber.new
+    @scrubber = Html::PermitScrubber.new
   end
 
   def test_responds_to_scrub
@@ -114,7 +114,7 @@ end
 
 class TargetScrubberTest < ScrubberTest
   def setup
-    @scrubber = Rails::Html::TargetScrubber.new
+    @scrubber = Html::TargetScrubber.new
   end
 
   def test_targeting_tags_removes_only_them
@@ -144,7 +144,7 @@ class TargetScrubberTest < ScrubberTest
 end
 
 class ReturningStopFromScrubNodeTest < ScrubberTest
-  class ScrubStopper < Rails::Html::PermitScrubber
+  class ScrubStopper < Html::PermitScrubber
     def scrub_node(node)
       Loofah::Scrubber::STOP
     end

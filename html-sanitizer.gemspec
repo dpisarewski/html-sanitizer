@@ -1,16 +1,16 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'rails/html/sanitizer/version'
+require 'html/sanitizer/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "rails-html-sanitizer"
-  spec.version       = Rails::Html::Sanitizer::VERSION
+  spec.name          = "html-sanitizer"
+  spec.version       = Html::Sanitizer::VERSION
   spec.authors       = ["Rafael Mendonça França", "Kasper Timm Hansen"]
-  spec.email         = ["rafaelmfranca@gmail.com", "kaspth@gmail.com"]
-  spec.description   = %q{HTML sanitization for Rails applications}
-  spec.summary       = %q{This gem is responsible to sanitize HTML fragments in Rails applications.}
-  spec.homepage      = "https://github.com/rafaelfranca/rails-html-sanitizer"
+  spec.email         = [ "dieter.pisarewski@gmail.com", "rafaelmfranca@gmail.com", "kaspth@gmail.com"]
+  spec.description   = %q{HTML sanitization}
+  spec.summary       = %q{This gem is responsible to sanitize HTML fragments.}
+  spec.homepage      = "https://github.com/dpisarewski/html-sanitizer"
   spec.license       = "MIT"
 
   spec.files         = Dir["lib/**/*", "README.md", "LICENSE.txt", "CHANGELOG.md"]

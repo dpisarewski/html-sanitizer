@@ -1,5 +1,5 @@
 require "minitest/autorun"
-require "rails-html-sanitizer"
+require "sanitizer"
 require "rails/dom/testing/assertions/dom_assertions"
 
 class SanitizersTest < Minitest::Test
@@ -7,11 +7,11 @@ class SanitizersTest < Minitest::Test
 
   def test_sanitizer_sanitize_raises_not_implemented_error
     assert_raises NotImplementedError do
-      Rails::Html::Sanitizer.new.sanitize('')
+      Html::Sanitizer.new.sanitize('')
     end
   end
 
-  class XpathRemovalTestSanitizer < Rails::Html::Sanitizer
+  class XpathRemovalTestSanitizer < Html::Sanitizer
     def sanitize(html, options = {})
       fragment = Loofah.fragment(html)
       remove_xpaths(fragment, options[:xpaths]).to_s
@@ -448,15 +448,15 @@ protected
   end
 
   def full_sanitize(input, options = {})
-    Rails::Html::FullSanitizer.new.sanitize(input, options)
+    Html::FullSanitizer.new.sanitize(input, options)
   end
 
   def link_sanitize(input, options = {})
-    Rails::Html::LinkSanitizer.new.sanitize(input, options)
+    Html::LinkSanitizer.new.sanitize(input, options)
   end
 
   def white_list_sanitize(input, options = {})
-    Rails::Html::WhiteListSanitizer.new.sanitize(input, options)
+    Html::WhiteListSanitizer.new.sanitize(input, options)
   end
 
   def assert_sanitized(input, expected = nil)
@@ -468,22 +468,22 @@ protected
   end
 
   def sanitize_css(input)
-    Rails::Html::WhiteListSanitizer.new.sanitize_css(input)
+    Html::WhiteListSanitizer.new.sanitize_css(input)
   end
 
   def scope_allowed_tags(tags)
-    Rails::Html::WhiteListSanitizer.allowed_tags = %w(u)
-    yield Rails::Html::WhiteListSanitizer.new
+    Html::WhiteListSanitizer.allowed_tags = %w(u)
+    yield Html::WhiteListSanitizer.new
 
   ensure
-    Rails::Html::WhiteListSanitizer.allowed_tags = nil
+    Html::WhiteListSanitizer.allowed_tags = nil
   end
 
   def scope_allowed_attributes(attributes)
-    Rails::Html::WhiteListSanitizer.allowed_attributes = attributes
-    yield Rails::Html::WhiteListSanitizer.new
+    Html::WhiteListSanitizer.allowed_attributes = attributes
+    yield Html::WhiteListSanitizer.new
 
   ensure
-    Rails::Html::WhiteListSanitizer.allowed_attributes = nil
+    Html::WhiteListSanitizer.allowed_attributes = nil
   end
 end

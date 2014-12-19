@@ -1,23 +1,14 @@
-# Rails Html Sanitizers
-
-In Rails 4.2 and above this gem will be responsible for sanitizing HTML fragments in Rails
-applications, i.e. in the `sanitize`, `sanitize_css`, `strip_tags` and `strip_links` methods.
-
-Rails Html Sanitizer is only intended to be used with Rails applications. If you need similar functionality in non Rails apps consider using [Loofah](https://github.com/flavorjones/loofah) directly (that's what handles sanitization under the hood).
+This gem is a fork from [Rails Html Sanitizers](https://github.com/rails/rails-html-sanitizer) without rails dependency.
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-    gem 'rails-html-sanitizer'
+    gem 'html-sanitizer', github: 'dpisarewski/html-sanitizer'
 
 And then execute:
 
     $ bundle
-
-Or install it yourself as:
-
-    $ gem install rails-html-sanitizer
 
 ## Usage
 
@@ -28,7 +19,7 @@ All sanitizers respond to `sanitize`.
 #### FullSanitizer
 
 ```ruby
-full_sanitizer = Rails::Html::FullSanitizer.new
+full_sanitizer = Html::FullSanitizer.new
 full_sanitizer.sanitize("<b>Bold</b> no more!  <a href='more.html'>See more here</a>...")
 # => Bold no more!  See more here...
 ```
@@ -36,7 +27,7 @@ full_sanitizer.sanitize("<b>Bold</b> no more!  <a href='more.html'>See more here
 #### LinkSanitizer
 
 ```ruby
-link_sanitizer = Rails::Html::LinkSanitizer.new
+link_sanitizer = Html::LinkSanitizer.new
 link_sanitizer.sanitize('<a href="example.com">Only the link text will be kept.</a>')
 # => Only the link text will be kept.
 ```
@@ -44,7 +35,7 @@ link_sanitizer.sanitize('<a href="example.com">Only the link text will be kept.<
 #### WhiteListSanitizer
 
 ```ruby
-white_list_sanitizer = Rails::Html::WhiteListSanitizer.new
+white_list_sanitizer = Html::WhiteListSanitizer.new
 
 # sanitize via an extensive white list of allowed elements
 white_list_sanitizer.sanitize(@article.body)
@@ -63,14 +54,14 @@ white_list_sanitizer.sanitize_css('background-color: #000;')
 
 Scrubbers are objects responsible for removing nodes or attributes you don't want in your HTML document.
 
-This gem includes two scrubbers `Rails::Html::PermitScrubber` and `Rails::Html::TargetScrubber`.
+This gem includes two scrubbers `Html::PermitScrubber` and `Html::TargetScrubber`.
 
-#### `Rails::Html::PermitScrubber`
+#### `Html::PermitScrubber`
 
 This scrubber allows you to permit only the tags and attributes you want.
 
 ```ruby
-scrubber = Rails::Html::PermitScrubber.new
+scrubber = Html::PermitScrubber.new
 scrubber.tags = ['a']
 
 html_fragment = Loofah.fragment('<a><img/ ></a>')
@@ -78,14 +69,14 @@ html_fragment.scrub!(scrubber)
 html_fragment.to_s # => "<a></a>"
 ```
 
-#### `Rails::Html::TargetScrubber`
+#### `Html::TargetScrubber`
 
 Where `PermitScrubber` picks out tags and attributes to permit in sanitization,
-`Rails::Html::TargetScrubber` targets them for removal.
+`Html::TargetScrubber` targets them for removal.
 
 
 ```ruby
-scrubber = Rails::Html::TargetScrubber.new
+scrubber = Html::TargetScrubber.new
 scrubber.tags = ['img']
 
 html_fragment = Loofah.fragment('<a><img/ ></a>')
@@ -98,7 +89,7 @@ html_fragment.to_s # => "<a></a>"
 You can also create custom scrubbers in your application if you want to.
 
 ```ruby
-class CommentScrubber < Rails::Html::PermitScrubber
+class CommentScrubber < Html::PermitScrubber
   def allowed_node?(node)
     !%w(form script comment blockquote).include?(node.name)
   end
@@ -113,15 +104,7 @@ class CommentScrubber < Rails::Html::PermitScrubber
 end
 ```
 
-See `Rails::Html::PermitScrubber` documentation to learn more about which methods can be overridden.
-
-#### Custom Scrubber in a Rails app
-
-Using the `CommentScrubber` from above, you can use this in a Rails view like so:
-
-```ruby
-<%= sanitize @comment, scrubber: CommentScrubber.new %>
-```
+See `Html::PermitScrubber` documentation to learn more about which methods can be overridden.
 
 ## Read more
 
