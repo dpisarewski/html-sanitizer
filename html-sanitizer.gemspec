@@ -6,7 +6,7 @@ require 'html/sanitizer/version'
 Gem::Specification.new do |spec|
   spec.name          = "html-sanitizer"
   spec.version       = Html::Sanitizer::VERSION
-  spec.authors       = ["Rafael Mendonça França", "Kasper Timm Hansen"]
+  spec.authors       = ["Dieter Pisarewski", "Rafael Mendonça França", "Kasper Timm Hansen"]
   spec.email         = [ "dieter.pisarewski@gmail.com", "rafaelmfranca@gmail.com", "kaspth@gmail.com"]
   spec.description   = %q{HTML sanitization}
   spec.summary       = %q{This gem is responsible to sanitize HTML fragments.}
